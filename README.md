@@ -52,7 +52,6 @@ Make sure you have the following installed:
    npm start
    ```
 
-5. Access the application at `http://localhost:3000`
 
 ## Deployment
 For production deployment, use services like:
@@ -64,8 +63,6 @@ Feel free to fork the repository and create pull requests for improvements. Foll
 ## License
 This project is licensed under the MIT License.
 
-## Contact
-For any inquiries, reach out to [your email] or open an issue on GitHub.
 
 
 
