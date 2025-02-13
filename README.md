@@ -1,6 +1,6 @@
 # E-Commerce Application
 
-## Overview
+## Milestone1:Overview
 This is a full-featured E-Commerce Application that allows users to browse products, add them to the cart, and complete purchases through a secure checkout system. The platform supports multiple payment methods and provides an intuitive user experience for customers.
 
 ## Features
@@ -15,7 +15,8 @@ This is a full-featured E-Commerce Application that allows users to browse produ
 - Email notifications for orders and account-related activities
 
 ## Tech Stack
-### Frontend:
+### Milestone2: 
+#### Frontend:
 - React.js 
 - Context API
 - Tailwind CSS
