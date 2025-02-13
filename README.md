@@ -17,10 +17,17 @@ This is a full-featured E-Commerce Application that allows users to browse produ
 ## Tech Stack
 ### Milestone2: 
 #### Frontend:
-- React.js 
-- Context API
+- React.js
 - Tailwind CSS
-
+### Milestone3:
+- Context API
+- MangooseDB
+### Milestone4:
+- build a user registration system
+### Milestone5:
+- build a signup page
+### Milestone6:
+- Backend Signup endpoint with password encryption and (optional)functionality to upload image of user and saving it in uploads folder
 ### Payment Integration:
 - Stripe / PayPal / Razorpay
 
