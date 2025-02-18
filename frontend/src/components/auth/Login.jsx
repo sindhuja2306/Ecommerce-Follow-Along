@@ -7,6 +7,22 @@ import { Link } from 'react-router-dom';
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error,setError]=useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submit behavior
+    try {
+      // Make the POST request to the backend (replace with your actual API endpoint)
+      const response = await axios.post("http://localhost:8000/api/v2/user/login", { email, password });
+      // Assuming response contains a token or user data on successful login
+      console.log(response.data);
+      // Redirect or take some action upon successful login here
+    } catch (error) {
+      // Handle errors (e.g., invalid credentials)
+      setError("There was an error logging in. Please check your credentials.");
+      console.error("There was an error logging in!", error);
+    }
+  };
+
 
 
   return (
@@ -18,7 +34,7 @@ const Login = () => {
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}> 
                 <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email address</label>
                     <div className="mt-1">

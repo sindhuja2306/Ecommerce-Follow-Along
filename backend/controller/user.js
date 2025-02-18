@@ -9,42 +9,56 @@ const sendMail=require('../utils/sendMail')
 
  
 // create user
-router.post("/create-user", upload.single("file"), catchAsyncErrors(async (req, res, next) => {
-    console.log("Creating user...");
-    const { name, email, password } = req.body;
- 
-    const userEmail = await User.findOne({ email });
-    if (userEmail) {
-        if (req.file) {
-            const filepath = path.join(__dirname, "../uploads", req.file.filename);
-            try {
-                fs.unlinkSync(filepath);
-            } catch (err) {
-                console.log("Error removing file:", err);
-                return res.status(500).json({ message: "Error removing file" });
-            }
-        }
-        return next(new ErrorHandler("User already exists", 400));
+// POST route for user login
+router.post("/login", catchAsyncErrors(async (req, res, next) => {
+   
+    // Log when login request is received
+    console.log("Logging in user...");
+
+
+    // Extract email and password from request body
+    const { email, password } = req.body;
+
+
+    // Check if both email and password are provided
+    if (!email || !password) {
+        return next(new ErrorHandler("Please provide email and password", 400));
     }
- 
-    let fileUrl = "";
-    if (req.file) {
-        fileUrl = path.join("uploads", req.file.filename);
+
+
+    // Find user by email in the database and also retrieve the hashed password
+    const user = await User.findOne({ email }).select("+password");
+
+
+    // If no user found, return an error
+    if (!user) {
+        return next(new ErrorHandler("Invalid Email or Password", 401));
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("At Create ", "Password: ", password, "Hash: ", hashedPassword);
-    const user = await User.create({
-        name,
-        email,
-        password: hashedPassword,
-        avatar: {
-            public_id: req.file?.filename || "",
-            url: fileUrl,
-        },
+
+
+    // Compare entered password with the stored hashed password
+    const isPasswordMatched = await bcrypt.compare(password, user.password);
+
+
+    // Log password and hash for debugging (REMOVE in production)
+    console.log("At Auth", "Password: ", password, "Hash: ", user.password);
+
+
+    // If passwords do not match, return an error
+    if (!isPasswordMatched) {
+        return next(new ErrorHandler("Invalid Email or Password", 401));
+    }
+
+
+    // Remove password from user object before sending response
+    user.password = undefined;
+
+
+    // Send success response with user details
+    res.status(200).json({
+        success: true,
+        user,
     });
-    console.log(user);
-    res.status(201).json({ success: true, user });
- 
+
+
 }));
- 
-module.exports = router;
