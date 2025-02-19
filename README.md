@@ -28,6 +28,9 @@ This is a full-featured E-Commerce Application that allows users to browse produ
 - build a signup page
 ### Milestone6:
 - Backend Signup endpoint with password encryption and (optional)functionality to upload image of user and saving it in uploads folder
+### Milestone7:
+- Create Login Endpoint
+- Validate Password
 ### Payment Integration:
 - Stripe / PayPal / Razorpay
 
