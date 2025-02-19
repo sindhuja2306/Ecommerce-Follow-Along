@@ -31,6 +31,9 @@ This is a full-featured E-Commerce Application that allows users to browse produ
 ### Milestone7:
 - Create Login Endpoint
 - Validate Password
+### Milestone8:
+- Create the Card Component
+- Design the Homepage Layout
 ### Payment Integration:
 - Stripe / PayPal / Razorpay
 
