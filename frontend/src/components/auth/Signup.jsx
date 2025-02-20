@@ -3,16 +3,15 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { RxAvatar } from "react-icons/rx";
 import axios from "axios";
-import ValidationFormObject from "../../validation";
  
-const Signup = () => {
+function Signup() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [errors, setErrors] = useState({});
- 
+
   const handleFileSubmit = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -21,54 +20,54 @@ const Signup = () => {
       setAvatar(file);
     }
   };
- 
+
   const validateFields = () => {
     const nameError = ValidationFormObject.validteName(name);
     const emailError = ValidationFormObject.validteEmail(email);
     const passwordError = ValidationFormObject.validtePass(password);
- 
+
     const newErrors = {};
     if (nameError !== true) newErrors.name = nameError;
     if (emailError !== true) newErrors.email = emailError;
     if (passwordError !== true) newErrors.password = passwordError;
- 
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // Return true if no errors
   };
- 
+
   const handleSubmit = (e) => {
     e.preventDefault();
- 
+
     if (!validateFields()) {
       return; // Stop submission if validation fails
     }
- 
+
     const newForm = new FormData();
     newForm.append("file", avatar);
     newForm.append("name", name);
     newForm.append("email", email);
     newForm.append("password", password);
- 
+
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
         "Accept": "any",
       },
     };
- 
-//axios request
-    axios.post("http://10.1.77.124:8000/api/v2/user/create-user", newForm, config).then((res)=>{
+
+    //axios request
+    axios.post("http://10.1.77.124:8000/api/v2/user/create-user", newForm, config).then((res) => {
       console.log(res.data);
-    }).catch((err)=>{
+    }).catch((err) => {
       console.log(err);
-    })
-    axios.post("http://localhost:8000/api/v2/user/create-user", newForm, config).then((res)=>{
+    });
+    axios.post("http://localhost:8000/api/v2/user/create-user", newForm, config).then((res) => {
       console.log(res.data);
-    }).catch((err)=>{
+    }).catch((err) => {
       console.log(err);
-    })
-};
- 
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -93,16 +92,13 @@ const Signup = () => {
                   autoComplete="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className={`appearance-none block w-full px-3 py-2 border ${
-                    errors.name ? "border-red-500" : "border-gray-300"
-                  } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
-                />
+                  className={`appearance-none block w-full px-3 py-2 border ${errors.name ? "border-red-500" : "border-gray-300"} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`} />
                 {errors.name && (
                   <p className="text-red-500 text-xs mt-1">{errors.name}</p>
                 )}
               </div>
             </div>
- 
+
             <div>
               <label
                 htmlFor="email"
@@ -117,16 +113,13 @@ const Signup = () => {
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`appearance-none block w-full px-3 py-2 border ${
-                    errors.email ? "border-red-500" : "border-gray-300"
-                  } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
-                />
+                  className={`appearance-none block w-full px-3 py-2 border ${errors.email ? "border-red-500" : "border-gray-300"} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`} />
                 {errors.email && (
                   <p className="text-red-500 text-xs mt-1">{errors.email}</p>
                 )}
               </div>
             </div>
- 
+
             <div>
               <label
                 htmlFor="password"
@@ -141,29 +134,24 @@ const Signup = () => {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className={`appearance-none block w-full px-3 py-2 border ${
-                    errors.password ? "border-red-500" : "border-gray-300"
-                  } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
-                />
+                  className={`appearance-none block w-full px-3 py-2 border ${errors.password ? "border-red-500" : "border-gray-300"} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`} />
                 {visible ? (
                   <AiOutlineEye
                     className="absolute right-2 top-2 cursor-pointer"
                     size={25}
-                    onClick={() => setVisible(false)}
-                  />
+                    onClick={() => setVisible(false)} />
                 ) : (
                   <AiOutlineEyeInvisible
                     className="absolute right-2 top-2 cursor-pointer"
                     size={25}
-                    onClick={() => setVisible(true)}
-                  />
+                    onClick={() => setVisible(true)} />
                 )}
                 {errors.password && (
                   <p className="text-red-500 text-xs mt-1">{errors.password}</p>
                 )}
               </div>
             </div>
- 
+
             <div>
               <label
                 htmlFor="avatar"
@@ -175,8 +163,7 @@ const Signup = () => {
                     <img
                       src={URL.createObjectURL(avatar)}
                       alt="avatar"
-                      className="h-full w-full object-cover rounded-full"
-                    />
+                      className="h-full w-full object-cover rounded-full" />
                   ) : (
                     <RxAvatar className="h-8 w-8" />
                   )}
@@ -192,12 +179,11 @@ const Signup = () => {
                     id="file-input"
                     accept=".jpg,.jpeg,.png"
                     onChange={handleFileSubmit}
-                    className="sr-only"
-                  />
+                    className="sr-only" />
                 </label>
               </div>
             </div>
- 
+
             <div>
               <button
                 type="submit"
@@ -206,7 +192,7 @@ const Signup = () => {
                 Submit
               </button>
             </div>
- 
+
             <div className="flex items-center w-full">
               <h4>Already have an account?</h4>
               <Link to="/login" className="text-blue-600 pl-2">
@@ -218,6 +204,6 @@ const Signup = () => {
       </div>
     </div>
   );
-};
+}
  
 export default Signup;
